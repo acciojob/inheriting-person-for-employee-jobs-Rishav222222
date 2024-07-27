@@ -5,29 +5,45 @@ class Person {
         this.age = age;
     }
 
-    // Method to greet with the person's name and age
     greet() {
-        console.log(`Hello, my name is ${this.name}, I am ${this.age} years old`);
+        console.log(`Hello, my name is ${this.name}, I am ${this.age} years old.`);
     }
 }
 
-// Define the Employee class that extends the Person class
+// Define the Employee class that extends Person
 class Employee extends Person {
     constructor(name, age, jobTitle) {
-        // Call the constructor of the Person class
-        super(name, age);
+        super(name, age); // Call the parent class constructor
         this.jobTitle = jobTitle;
     }
 
-    // Method to greet with the person's name, age, and job title
     jobGreet() {
-        console.log(`Hello, my name is ${this.name}, I am ${this.age} years old, and my job title is ${this.jobTitle}`);
+        console.log(`Hello, my name is ${this.name}, I am ${this.age} years old, and my job title is ${this.jobTitle}.`);
     }
 }
 
 // Example Test Cases
-const person = new Person("Alice", 25);
-person.greet(); // Output: Hello, my name is Alice, I am 25 years old
 
+// Create an instance of Person
+const person = new Person("Alice", 25);
+person.greet(); // Output: Hello, my name is Alice, I am 25 years old.
+
+// Create an instance of Employee
 const employee = new Employee("Bob", 30, "Manager");
-employee.jobGreet(); 
+employee.jobGreet(); // Output: Hello, my name is Bob, I am 30 years old, and my job title is Manager.
+describe('Person and Employee Classes', () => {
+    it('should correctly greet as a person', () => {
+        const person = new Person("Alice", 25);
+        cy.spy(console, 'log');
+        person.greet();
+        expect(console.log).to.be.calledWith('Hello, my name is Alice, I am 25 years old.');
+    });
+
+    it('should correctly greet as an employee', () => {
+        const employee = new Employee("Bob", 30, "Manager");
+        cy.spy(console, 'log');
+        employee.jobGreet();
+        expect(console.log).to.be.calledWith('Hello, my name is Bob, I am 30 years old, and my job title is Manager.');
+    });
+});
+
